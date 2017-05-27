@@ -1,0 +1,3 @@
+ipdb
+django-extensions
+django-devserver
