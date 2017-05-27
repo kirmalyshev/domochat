@@ -1,0 +1,33 @@
+
+DEBUG: True
+
+ALLOWED_HOSTS: ['*']
+
+TIME_ZONE: Europe/Moscow
+
+DATABASES:
+  default:
+    ENGINE: django.db.backends.postgresql_psycopg2
+    NAME: domochat
+    USER: domochat
+    PASSWORD: domochat
+    HOST: localhost
+    PORT: 5432
+
+EMAIL_HOST: smtp.yandex.ru
+EMAIL_FROM: example@example.ru
+EMAIL_HOST_USER: example@example.ru
+DEFAULT_FROM_EMAIL: example@example.ru
+EMAIL_HOST_PASSWORD: pass
+EMAIL_USE_TLS: True
+EMAIL_PORT: 587
+
+SECRET_KEY: super_secret_key_ever
+
+LANGUAGE: ru-ru
+
+SITE_ID: 1
+
+TELEGRAM:
+  # http://t.me/housechat_bot
+  TOKEN: 192545980:AAFI2wrIvMuiVbI7PCUVwP0cRGCamhuzegw
