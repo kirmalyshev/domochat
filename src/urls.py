@@ -16,6 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from apps.domochat import views
+
 urlpatterns = [
+    url(r'^$', views.main_page, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'company/(?P<name>.+(\s+?.+?)?)/', views.main_page, name='index'),
+
+
 ]

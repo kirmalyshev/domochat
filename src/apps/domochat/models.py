@@ -21,11 +21,17 @@ class PositionEnum(object):
         REOPENED: _("Пере окрыта"),
     }
 
+
 class AssociationOwnerHousing(models.Model):
     """Товарищество Собственников Жилья """
     name = models.CharField(_("Название ТСЖ"), max_length=40)
-    inn = models.CharField(_("ИНН"), max_length=40)
-    kpp = models.CharField(_("КПП"), max_length=40)
+    inn = models.CharField(_("ИНН"), max_length=40,
+                           null=True, blank=True)
+    kpp = models.CharField(_("КПП"), max_length=40,
+                           null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class ModeratorUser(User):
@@ -40,23 +46,37 @@ class ModeratorRequest(models.Model):
         _("Состояние запроса"), choices=PositionEnum.values.items())
     text = models.TextField(_("Текс заявки"))
 
+    def display(self):
+        return u"{} {}".format(self.id, PositionEnum.values.get(self.status))
+
+    def __str__(self):
+        return self.display()
+
 
 class House(models.Model):
     """ Дом """
     street = models.CharField(_("Улица"), max_length=40)
-    house = models.CharField(_("Дом"), max_length=40)
-    post_index = models.CharField(_("Почтовый Индекс"), max_length=40)
+    house_num = models.CharField(_("Дом"), max_length=40)
+    post_index = models.CharField(_("Почтовый Индекс"), max_length=40,
+                                  null=True, blank=True)
     city = models.CharField(_("Город"), max_length=40)
     association_owner_housing = models.ForeignKey(
-        AssociationOwnerHousing, verbose_name=_(u'ТСЖ'), db_index=True)
+        AssociationOwnerHousing,
+        verbose_name=_(u'ТСЖ'), db_index=True, null=True, blank=True)
+
+    def __str__(self):
+        return "__".join((self.street, self.house_num))
 
 
 class Chat(models.Model):
     """Чат"""
     name = models.CharField(_("Имя чата"), max_length=40)
     link = models.CharField(_("ссылка"), max_length=160)
-    chat = models.OneToOneField(
+    house = models.OneToOneField(
         House, on_delete=models.CASCADE, primary_key=True)
     request = models.ForeignKey(
-        ModeratorRequest, verbose_name=_(u'Заявка'), db_index=True)
+        ModeratorRequest, related_name='get_moderators',
+        verbose_name=_(u'Заявка'), db_index=True, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
