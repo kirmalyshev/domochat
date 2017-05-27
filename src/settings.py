@@ -13,20 +13,31 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import yaml
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$mf(kw*l*w)o=3!lcp8(bj3q2fzl7b4a%*$t0dr!+=1^4zrnh$'
+# Допустимо указать прямой путь к локальным настройкам в формате YAML через
+# переменную окружения 'DOMOCHAT_CONF_PATH'.
+# Если переменная пуста, для работы используется конфиг по относительному пути.
+_ENV = 'DOMOCHAT_CONF_PATH'
+CONF_PATH = os.getenv(_ENV)
+if not CONF_PATH:
+    CONF_PATH = '../config/domochat.yaml'
+CONF_PATH = os.path.normpath(CONF_PATH)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+conf = yaml.load(open(CONF_PATH))
 
-ALLOWED_HOSTS = []
+DEBUG = conf['DEBUG']
 
+ALLOWED_HOSTS = conf['ALLOWED_HOSTS']
+
+SITE_ID = conf['SITE_ID']
+
+SECRET_KEY = conf['SECRET_KEY']
 
 # Application definition
 
@@ -38,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.domochat',
+    'apps.domochat_bot',
 ]
 
 MIDDLEWARE = [
@@ -70,21 +82,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'domochat',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': conf['DATABASES']['default']['ENGINE'],
+        'NAME': conf['DATABASES']['default']['NAME'],
+        'USER': conf['DATABASES']['default']['USER'],
+        'PASSWORD': conf['DATABASES']['default']['PASSWORD'],
+        'HOST': conf['DATABASES']['default']['HOST'],
+        'PORT': conf['DATABASES']['default']['PORT']
     }
 }
 
+EMAIL_HOST = conf['EMAIL_HOST']
+EMAIL_FROM = conf['EMAIL_FROM']
+EMAIL_HOST_USER = conf['EMAIL_HOST_USER']
+DEFAULT_FROM_EMAIL = conf['DEFAULT_FROM_EMAIL']
+EMAIL_HOST_PASSWORD = conf['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = conf['EMAIL_USE_TLS']
+EMAIL_PORT = conf['EMAIL_PORT']
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -104,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -118,8 +134,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TELEGRAM_BOT_TOKEN = conf['TELEGRAM']['TOKEN']
