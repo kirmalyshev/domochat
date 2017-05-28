@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
-
 from django.db import models
+from django.utils.functional import cached_property
+from django.utils.translation import ugettext as _
 
 
 class PositionEnum(object):
@@ -22,8 +22,8 @@ class PositionEnum(object):
     }
 
 
-class AssociationOwnerHousing(models.Model):
-    """Товарищество Собственников Жилья """
+class HOA(models.Model):
+    """Товарищество Собственников Жилья - House Owners Association"""
     name = models.CharField(_("Название ТСЖ"), max_length=40)
     inn = models.CharField(_("ИНН"), max_length=40,
                            null=True, blank=True)
@@ -37,7 +37,7 @@ class AssociationOwnerHousing(models.Model):
 class ModeratorUser(User):
     """ Модераторы """
     association_owner_housing = models.ForeignKey(
-        AssociationOwnerHousing, verbose_name=_(u'ТСЖ'), db_index=True)
+        HOA, verbose_name=_(u'ТСЖ'), db_index=True)
 
 
 class ModeratorRequest(models.Model):
@@ -56,12 +56,12 @@ class ModeratorRequest(models.Model):
 class House(models.Model):
     """ Дом """
     street = models.CharField(_("Улица"), max_length=40)
-    house_num = models.CharField(_("Дом"), max_length=40)
+    number = models.CharField(_("Дом"), max_length=40)
     post_index = models.CharField(_("Почтовый Индекс"), max_length=40,
                                   null=True, blank=True)
     city = models.CharField(_("Город"), max_length=40)
-    association_owner_housing = models.ForeignKey(
-        AssociationOwnerHousing,
+    hoa = models.ForeignKey(
+        HOA,
         verbose_name=_(u'ТСЖ'), db_index=True, null=True, blank=True)
 
     def __str__(self):
@@ -69,9 +69,9 @@ class House(models.Model):
 
 
 class Chat(models.Model):
-    """Чат"""
-    name = models.CharField(_("Имя чата"), max_length=40)
-    link = models.CharField(_("ссылка"), max_length=160)
+    """Чат для дома"""
+    name = models.CharField(_("Имя чата"), max_length=55)
+    link = models.CharField(_("ссылка"), max_length=400)
     house = models.OneToOneField(
         House, on_delete=models.CASCADE, primary_key=True)
     request = models.ForeignKey(
@@ -80,3 +80,16 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.name
+
+    @cached_property
+    def house_address(self):
+        if self.house:
+            return self.house.address()
+
+
+class Order(models.Model):
+    chat = models.ForeignKey(Chat, verbose_name=u'Из какого чата')
+    text = models.TextField('Текст заявки')
+    executor = models.CharField('Исполнитель', max_length=200)
+    created = models.DateTimeField('Время создания', auto_now_add=True)
+    finished = models.DateTimeField('Время исполнения', null=True, blank=True)
