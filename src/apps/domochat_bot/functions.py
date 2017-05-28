@@ -41,7 +41,7 @@ def create_order(bot, update):
             chat.save()
             new_order = Order.objects.create(
                 chat=chat,
-                text=update.message
+                text=msg_text
             )
             update.message.reply_text(
                 "Спасибо за уведомление! Оформили заявочку "

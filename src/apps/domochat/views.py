@@ -19,15 +19,15 @@ def hoa_view(request, name):
 def hoa_id_view(request, hoa_id):
     hoa = get_object_or_404(HOA, id=hoa_id)
     houses = House.objects.filter(
-            hoa=hoa
-        ).select_related('hoa')
+        hoa=hoa
+    ).select_related('hoa')
     return render_to_response('hoa.html',
                               {'company': hoa, 'houses': houses})
 
 
 def index_view(request):
     return render_to_response(
-        'hoa.html', locals())
+        'index.html', locals())
 
 
 def profile_view(request, name=None):
@@ -37,17 +37,18 @@ def profile_view(request, name=None):
     ).select_related('hoa')
 
     return render_to_response(
-        'profile_view.html', locals())
+        'hoa_cabinet.html', locals())
 
 
 def hoa_cabinet_view(request, hoa_id):
-    company = HOA.objects.get(id=hoa_id)
+    company = HOA.objects.get(id=2)
     houses = House.objects.filter(
         hoa=company
     ).select_related('hoa')
 
     return render_to_response(
-        'profile_view.html', locals())
+        'hoa_cabinet.html', locals())
+
 
 def order_item_view(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -61,8 +62,10 @@ def order_item_view(request, order_id):
 
 def order_list_view(request):
     orders = Order.objects.all()
+    hoa = HOA.objects.get(id=2)
 
     context = {
-        'orders': orders
+        'orders': orders,
+        'hoa': hoa
     }
     return render_to_response('order_list.html', context=context)

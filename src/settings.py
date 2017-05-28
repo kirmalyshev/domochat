@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 import yaml
+
+try:
+    virtualenv_root = os.environ['VIRTUAL_ENV']
+except KeyError:
+    sys.stderr.write('Error: virtualenv does not activated.\n')
+    sys.exit(1)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,6 +37,21 @@ if not CONF_PATH:
 CONF_PATH = os.path.normpath(CONF_PATH)
 
 conf = yaml.load(open(CONF_PATH))
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+VAR_ROOT = os.path.join(virtualenv_root, 'var')
+if not os.path.exists(VAR_ROOT):
+    os.mkdir(VAR_ROOT)
+
+MEDIA_ROOT = os.path.join(VAR_ROOT, 'media')
+if not os.path.exists(MEDIA_ROOT):
+    os.mkdir(MEDIA_ROOT)
+
+MEDIA_URL = '/media/'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(VAR_ROOT, 'static')
 
 DEBUG = conf['DEBUG']
 
@@ -138,6 +160,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
 TELEGRAM_BOT_TOKEN = conf['TELEGRAM']['TOKEN']
