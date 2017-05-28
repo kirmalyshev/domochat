@@ -5,6 +5,7 @@
     <title>Snippet - Bootsnipp.com</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
           rel="stylesheet">
+
     <style>/*    --------------------------------------------------
 	:: General
 	-------------------------------------------------- */
@@ -141,6 +142,11 @@
         display: block;
         /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
     }
+     textarea {
+         text-indent: 30PX;
+         width:100%;
+         resize: vertical;background-color: #ffffff;  border: 2px solid;
+    border-radius: 25px; }
 
     .table-filter .media-meta {
         font-size: 11px;
@@ -257,8 +263,7 @@
                                                         {{ order.text | truncatewords:5 }}
                                                         <span class="pull-right pagado">{{ order.show_status }}</span>
                                                     </h4>
-                                                    <p class="summary"><a
-                                                            href="{{ order.chat.link }}">{{ order.executor }}</a>
+                                                    <a data-toggle="modal" data-target="#ttt{{order.id}}">{{ order }}</a>
                                                     </p>
                                                 </div>
 
@@ -284,6 +289,52 @@
 
     </div>
 </div>
+{% for order in orders %}
+<!-- Modal -->
+  <div class="modal fade" id="ttt{{order.id}}" role="dialog">
+    <div class="modal-dialog modal-sm" style="width: 80%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
 
+          <h4 class="modal-title">{{ order.chat.name }}</h4>
+        </div>
+          <div class="modal-body">
+              <textarea disabled rows="4" cols="60">{{ order.text }}</textarea>
+
+                <BR>
+                <BR>
+                <BR>
+              <div class="alert alert-success">
+                  <strong>Статус :</strong> {{ order.display }}
+              </div>
+
+              <div class="alert alert-info">
+                  <strong>Назначенное
+                      лицо:</strong> {{ order.exputer|default:"Не назначено" }}
+              </div>
+
+              <div class="alert alert-warning">
+                  <strong>Время создания:</strong> {{ order.created }}
+              </div>
+
+              <div class="alert alert-danger">
+                  <strong>Время выполнения: </strong>{{ order.finished|default:"Не известно" }}
+              </div>
+          </div>
+        <div class="modal-footer">
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary">Отправить в ТСЖ</button>
+
+                <button type="button" class="btn btn-primary">Отправить в hausemaster
+                </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
 </body>
 </html>
