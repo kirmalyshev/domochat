@@ -20,14 +20,17 @@ from apps.domochat import views
 
 urlpatterns = [
     url(r'^$', views.index_view),
-    url(r'^profile/(?P<name>.+(\s+?.+?)?)/$', views.profile_view,
-        name='profile'),
+    url(r'^profile/(?P<name>.+(\s+?.+?)?)/$', views.profile_view, name='profile'),
+    url(r'^company/(?P<hoa_id>\d)/cabinet/$', views.hoa_cabinet_view, name='hoa_cabinet'),
 
     url(r'^company/orders/$', views.order_list_view, name='orders'),
     url(r'^company/orders/(?P<order_id>\d)/', views.order_item_view,
         name='show_order'),
 
     url(r'^admin/', admin.site.urls),
-    url(r'(?P<name>.+(\s+?.+?)?)/', views.hoa_view, name='hoa_page'),
+    url(r'company/(?P<hoa_id>\d)/', views.hoa_id_view, name='hoa_page_with_id'),
+    url(r'company/(?P<name>.+(\s+?.+?)?)/', views.hoa_view,
+        name='hoa_page_with'),
+
 
 ]

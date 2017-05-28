@@ -9,8 +9,8 @@ DATABASES:
   default:
     ENGINE: django.db.backends.postgresql_psycopg2
     NAME: domochat
-    USER: postgres
-    PASSWORD: postgres
+    USER: domochat
+    PASSWORD: domochat
     HOST: localhost
     PORT: 5432
 

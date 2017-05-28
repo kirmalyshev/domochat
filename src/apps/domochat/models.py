@@ -52,7 +52,7 @@ class House(models.Model):
         verbose_name=_(u'ТСЖ'), db_index=True, null=True, blank=True)
 
     def __str__(self):
-        return "__".join((self.street, self.number))
+        return ", ".join((self.street, self.number))
 
     @cached_property
     def address(self):
@@ -94,7 +94,10 @@ class Order(models.Model):
 
     def display(self):
         return u"{} {}".format(
-            self.id, OrderStatusEnum.values.get(self.status))
+            self.id, self.show_status())
+
+    def show_status(self):
+        return OrderStatusEnum.values.get(self.status)
 
     def __str__(self):
         return self.display()

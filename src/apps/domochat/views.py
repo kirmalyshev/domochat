@@ -4,7 +4,7 @@ from apps.domochat.models import HOA, Order
 from apps.domochat.models import House
 
 
-def hoa_view(request, name=None):
+def hoa_view(request, name):
     if name:
         # В тестовом не будет имен с одинаковыми названиями
         company = HOA.objects.filter(name=name).get()
@@ -14,6 +14,15 @@ def hoa_view(request, name=None):
 
     return render_to_response(
         'hoa.html', locals())
+
+
+def hoa_id_view(request, hoa_id):
+    hoa = get_object_or_404(HOA, id=hoa_id)
+    houses = House.objects.filter(
+            hoa=hoa
+        ).select_related('hoa')
+    return render_to_response('hoa.html',
+                              {'company': hoa, 'houses': houses})
 
 
 def index_view(request):
@@ -30,6 +39,15 @@ def profile_view(request, name=None):
     return render_to_response(
         'profile_view.html', locals())
 
+
+def hoa_cabinet_view(request, hoa_id):
+    company = HOA.objects.get(id=hoa_id)
+    houses = House.objects.filter(
+        hoa=company
+    ).select_related('hoa')
+
+    return render_to_response(
+        'profile_view.html', locals())
 
 def order_item_view(request, order_id):
     order = get_object_or_404(Order, id=order_id)

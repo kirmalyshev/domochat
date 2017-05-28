@@ -69,8 +69,8 @@ body {font-size:16px;}
   <!-- Services -->
   <div class="container">
   <h2>Активные заявки</h2>
-  {% for obj in houses %}
-    <a href="{{obj.chat.link}}">{{obj.chat.request.text}}</a><br>
+  {% for house in houses %}
+    <a href="{{house.chat.link}}">{{house.chat.request.text}}</a><br>
   {% endfor %}
 </div>
 
