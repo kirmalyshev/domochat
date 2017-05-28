@@ -87,7 +87,8 @@ class Order(models.Model):
         _("Состояние запроса"), choices=OrderStatusEnum.values.items(),
         default=OrderStatusEnum.OPEN)
     text = models.TextField('Текст заявки')
-    executor = models.CharField('Исполнитель', max_length=200)
+    executor = models.CharField('Исполнитель', max_length=200,
+                                null=True, blank=True)
     created = models.DateTimeField('Время создания', auto_now_add=True)
     finished = models.DateTimeField('Время исполнения', null=True, blank=True)
 
