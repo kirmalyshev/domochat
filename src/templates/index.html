@@ -1,383 +1,218 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Snippet - Bootsnipp.com</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
-          rel="stylesheet">
-    <style>/*    --------------------------------------------------
-	:: General
-	-------------------------------------------------- */
-    body {
-        font-family: 'Open Sans', sans-serif;
-        color: #353535;
-    }
-
-    .content h1 {
-        text-align: center;
-    }
-
-    .content .content-footer p {
-        color: #6d6d6d;
-        font-size: 12px;
-        text-align: center;
-    }
-
-    .content .content-footer p a {
-        color: inherit;
-        font-weight: bold;
-    }
-
-    /*	--------------------------------------------------
-        :: Table Filter
-        -------------------------------------------------- */
-    .panel {
-        border: 1px solid #ddd;
-        background-color: #fcfcfc;
-    }
-
-    .panel .btn-group {
-        margin: 15px 0 30px;
-    }
-
-    .panel .btn-group .btn {
-        transition: background-color .3s ease;
-    }
-
-    .table-filter {
-        background-color: #fff;
-        border-bottom: 1px solid #eee;
-    }
-
-    .table-filter tbody tr:hover {
-        cursor: pointer;
-        background-color: #eee;
-    }
-
-    .table-filter tbody tr td {
-        padding: 10px;
-        vertical-align: middle;
-        border-top-color: #eee;
-    }
-
-    .table-filter tbody tr.selected td {
-        background-color: #eee;
-    }
-
-    .table-filter tr td:first-child {
-        width: 38px;
-    }
-
-    .table-filter tr td:nth-child(2) {
-        width: 35px;
-    }
-
-    .ckbox {
-        position: relative;
-    }
-
-    .ckbox input[type="checkbox"] {
-        opacity: 0;
-    }
-
-    .ckbox label {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .ckbox label:before {
-        content: '';
-        top: 1px;
-        left: 0;
-        width: 18px;
-        height: 18px;
-        display: block;
-        position: absolute;
-        border-radius: 2px;
-        border: 1px solid #bbb;
-        background-color: #fff;
-    }
-
-    .ckbox input[type="checkbox"]:checked + label:before {
-        border-color: #2BBCDE;
-        background-color: #2BBCDE;
-    }
-
-    .ckbox input[type="checkbox"]:checked + label:after {
-        top: 3px;
-        left: 3.5px;
-        content: '\e013';
-        color: #fff;
-        font-size: 11px;
-        font-family: 'Glyphicons Halflings';
-        position: absolute;
-    }
-
-    .table-filter .star {
-        color: #ccc;
-        text-align: center;
-        display: block;
-    }
-
-    .table-filter .star.star-checked {
-        color: #F0AD4E;
-    }
-
-    .table-filter .star:hover {
-        color: #ccc;
-    }
-
-    .table-filter .star.star-checked:hover {
-        color: #F0AD4E;
-    }
-
-    .table-filter .media-photo {
-        width: 35px;
-    }
-
-    .table-filter .media-body {
-        display: block;
-        /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
-    }
-
-    .table-filter .media-meta {
-        font-size: 11px;
-        color: #999;
-    }
-
-    .table-filter .media .title {
-        color: #2BBCDE;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: normal;
-        margin: 0;
-    }
-
-    .table-filter .media .title span {
-        font-size: .8em;
-        margin-right: 20px;
-    }
-
-    .table-filter .media .title span.pagado {
-        color: #5cb85c;
-    }
-
-    .table-filter .media .title span.pendiente {
-        color: #f0ad4e;
-    }
-
-    .table-filter .media .title span.cancelado {
-        color: #d9534f;
-    }
-
-    .table-filter .media .summary {
-        font-size: 14px;
-    }</style>
-    <script type="text/javascript"
-            src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript"
-            src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript">$(document).ready(function () {
-
-        $('.star').on('click', function () {
-            $(this).toggleClass('star-checked');
-        });
-
-        $('.ckbox label').on('click', function () {
-            $(this).parents('tr').toggleClass('selected');
-        });
-
-        $('.btn-filter').on('click', function () {
-            var $target = $(this).data('target');
-            if ($target != 'all') {
-                $('.table tr').css('display', 'none');
-                $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
-            } else {
-                $('.table tr').css('display', 'none').fadeIn('slow');
-            }
-        });
-
-    });</script>
-</head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
 <body>
-<div class="container">
-    <div class="row">
 
-        <section class="content">
-            <h1>Список чатов</h1>
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button"
-                                        class="btn btn-success btn-filter"
-                                        data-target="pagado">Тихо
-                                </button>
-                                <button type="button"
-                                        class="btn btn-warning btn-filter"
-                                        data-target="pendiente">Идет обсуждение
-                                </button>
-                                <button type="button"
-                                        class="btn btn-danger btn-filter"
-                                        data-target="cancelado">Брань
-                                </button>
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64">{{company.name}}</h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+    <a href="#link" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Активные чаты</a>
+    <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Заявки</a>
+    <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Пожары</a>
+    <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Общее</a>
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Настройки</a>
+  </div>
+</nav>
 
-                            </div>
-                        </div>
-                        <div class="table-container">
-                            <table class="table table-filter">
-                                <tbody>
-                                {% for obj in houses %}
-                                <tr data-status="pagado">
-                                    <td>
-                                        <div class="ckbox">
-                                            <input id="checkbox1"
-                                                   type="checkbox">
-                                            <label for="checkbox1"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:;" class="star">
-                                            <i class="glyphicon glyphicon-star"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="media">
-                                            <a href="#" class="pull-left">
-                                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"
-                                                     class="media-photo">
-                                            </a>
-                                            <div class="media-body">
-                                                <span class="media-meta pull-right">Май 28, 2017</span>
-                                                <h4 class="title">
-                                                    {{  obj.chat.name }}
-                                                    <span class="pull-right pagado">штиль</span>
-                                                </h4>
-                                                <p class="summary"><a href="{{obj.chat.link}}">{{obj.chat.link}}</a></p>
-                                            </div>
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
+  <span>{{company_name}}</span>
+</header>
 
-                                        </div>
-                                    </td>
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-                                </tr>
-                                {% endfor %}
-{#                                <tr data-status="pendiente">#}
-{#                                    <td>#}
-{#                                        <div class="ckbox">#}
-{#                                            <input id="checkbox3"#}
-{#                                                   type="checkbox">#}
-{#                                            <label for="checkbox3"></label>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="javascript:;" class="star">#}
-{#                                            <i class="glyphicon glyphicon-star"></i>#}
-{#                                        </a>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <div class="media">#}
-{#                                            <a href="#" class="pull-left">#}
-{#                                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"#}
-{#                                                     class="media-photo">#}
-{#                                            </a>#}
-{#                                            <div class="media-body">#}
-{#                                                <span class="media-meta pull-right">Май 28, 2017</span>#}
-{#                                                <h4 class="title">#}
-{#                                                    Lorem Impsum#}
-{#                                                    <span class="pull-right pendiente">(Pendiente)</span>#}
-{#                                                </h4>#}
-{#                                                <p class="summary">Ut enim ad#}
-{#                                                    minim veniam, quis nostrud#}
-{#                                                    exercitation...</p>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                </tr>#}
-{#                                <tr data-status="cancelado">#}
-{#                                    <td>#}
-{#                                        <div class="ckbox">#}
-{#                                            <input id="checkbox2"#}
-{#                                                   type="checkbox">#}
-{#                                            <label for="checkbox2"></label>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="javascript:;" class="star">#}
-{#                                            <i class="glyphicon glyphicon-star"></i>#}
-{#                                        </a>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <div class="media">#}
-{#                                            <a href="#" class="pull-left">#}
-{#                                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"#}
-{#                                                     class="media-photo">#}
-{#                                            </a>#}
-{#                                            <div class="media-body">#}
-{#                                                <span class="media-meta pull-right">Май 28, 2017</span>#}
-{#                                                <h4 class="title">#}
-{#                                                    Фрунзе 12#}
-{#                                                    <span class="pull-right cancelado">(Cancelado)</span>#}
-{#                                                </h4>#}
-{#                                                <p class="summary">Ut enim ad#}
-{#                                                    minim veniam, quis nostrud#}
-{#                                                    exercitation...</p>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                </tr>#}
-{#                                <tr data-status="pagado" class="selected">#}
-{#                                    <td>#}
-{#                                        <div class="ckbox">#}
-{#                                            <input id="checkbox4" checked=""#}
-{#                                                   type="checkbox">#}
-{#                                            <label for="checkbox4"></label>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="javascript:;"#}
-{#                                           class="star star-checked">#}
-{#                                            <i class="glyphicon glyphicon-star"></i>#}
-{#                                        </a>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <div class="media">#}
-{#                                            <a href="#" class="pull-left">#}
-{#                                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"#}
-{#                                                     class="media-photo">#}
-{#                                            </a>#}
-{#                                            <div class="media-body">#}
-{#                                                <span class="media-meta pull-right">Май 28, 2017</span>#}
-{#                                                <h4 class="title">#}
-{#                                                    Lorem Impsum#}
-{#                                                    <span class="pull-right pagado">штиль</span>#}
-{#                                                </h4>#}
-{#                                                <p class="summary">Ut enim ad#}
-{#                                                    minim veniam, quis nostrud#}
-{#                                                    exercitation...</p>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                </tr>#}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-footer">
-                    <p>
-                        Page © - 2017 <br>
-                        Powered By AngelHack</a>
-                    </p>
-                </div>
-            </div>
-        </section>
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="#link">
+    <h2>Активные чаты</h2>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
 
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      {% for obj in houses %}
+
+      <a href="{{obj.chat.link}}">{{obj.chat}}</a><br>
+      {% endfor %}
     </div>
+  </div>
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="container">
+  <h2>Активные заявки</h2>
+  {% for obj in houses %}
+    <a href="{{obj.chat.link}}">{{obj.chat.request.text}}</a><br>
+  {% endfor %}
 </div>
+
+  <!-- Designers -->
+  <div class="w3-container" id="designers" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Designers.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>The best team in the world.</p>
+    <p>We are lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
+    incididunt ut labore et quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+    <p><b>Our designers are thoughtfully chosen</b>:</p>
+  </div>
+
+  <!-- The Team -->
+  <div class="w3-row-padding w3-grayscale">
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+        <div class="w3-container">
+          <h3>John Doe</h3>
+          <p class="w3-opacity">CEO & Founder</p>
+          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="/w3images/team1.jpg" alt="Jane" style="width:100%">
+        <div class="w3-container">
+          <h3>Jane Doe</h3>
+          <p class="w3-opacity">Designer</p>
+          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="/w3images/team3.jpg" alt="Mike" style="width:100%">
+        <div class="w3-container">
+          <h3>Mike Ross</h3>
+          <p class="w3-opacity">Architect</p>
+          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Packages / Pricing Tables -->
+  <div class="w3-container" id="packages" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Packages.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Some text our prices. Lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
+  </div>
+
+  <div class="w3-row-padding">
+    <div class="w3-half w3-margin-bottom">
+      <ul class="w3-ul w3-light-grey w3-center">
+        <li class="w3-dark-grey w3-xlarge w3-padding-32">Basic</li>
+        <li class="w3-padding-16">Floorplanning</li>
+        <li class="w3-padding-16">10 hours support</li>
+        <li class="w3-padding-16">Photography</li>
+        <li class="w3-padding-16">20% furniture discount</li>
+        <li class="w3-padding-16">Good deals</li>
+        <li class="w3-padding-16">
+          <h2>$ 199</h2>
+          <span class="w3-opacity">per room</span>
+        </li>
+        <li class="w3-light-grey w3-padding-24">
+          <button class="w3-button w3-white w3-padding-large w3-hover-black">Sign Up</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="w3-half">
+      <ul class="w3-ul w3-light-grey w3-center">
+        <li class="w3-red w3-xlarge w3-padding-32">Pro</li>
+        <li class="w3-padding-16">Floorplanning</li>
+        <li class="w3-padding-16">50 hours support</li>
+        <li class="w3-padding-16">Photography</li>
+        <li class="w3-padding-16">50% furniture discount</li>
+        <li class="w3-padding-16">GREAT deals</li>
+        <li class="w3-padding-16">
+          <h2>$ 249</h2>
+          <span class="w3-opacity">per room</span>
+        </li>
+        <li class="w3-light-grey w3-padding-24">
+          <button class="w3-button w3-red w3-padding-large w3-hover-black">Sign Up</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="w3-container" id="contact" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Contact.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Do you want us to style your home? Fill out the form and fill me in with the details :) We love meeting new people!</p>
+    <form action="/action_page.php" target="_blank">
+      <div class="w3-section">
+        <label>Name</label>
+        <input class="w3-input w3-border" type="text" name="Name" required>
+      </div>
+      <div class="w3-section">
+        <label>Email</label>
+        <input class="w3-input w3-border" type="text" name="Email" required>
+      </div>
+      <div class="w3-section">
+        <label>Message</label>
+        <input class="w3-input w3-border" type="text" name="Message" required>
+      </div>
+      <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Send Message</button>
+    </form>
+  </div>
+
+<!-- End page content -->
+</div>
+
+<!-- W3.CSS Container -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
 
 </body>
 </html>
