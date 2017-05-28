@@ -18,5 +18,5 @@ dp = domochat_updater.dispatcher
 
 # dp.add_handler(start_handler)
 # dp.add_handler(hello_handler)
-# dp.add_handler(order_handler)
+dp.add_handler(order_handler)
 dp.add_handler(inline_caps_handler)

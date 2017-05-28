@@ -7,18 +7,18 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 
 
-class PositionEnum(object):
+class OrderStatusEnum(object):
     """
     Статусы заявок
     """
-    CLOSED, IN_PROCESSING, POSTPONED, UPDATE, REOPENED = range(0, 5)
+    OPEN, CLOSED, PROCESSING, POSTPONED, UPDATE = range(5)
 
     values = {
+        OPEN: _('Открыта'),
         CLOSED: _("Закрыта"),
-        IN_PROCESSING: _("Выполняеется"),
+        PROCESSING: _("Выполняеется"),
         POSTPONED: _("Отложена"),
         UPDATE: _("Уточение"),
-        REOPENED: _("Пере окрыта"),
     }
 
 
@@ -40,19 +40,6 @@ class ModeratorUser(User):
         HOA, verbose_name=_(u'ТСЖ'), db_index=True)
 
 
-class ModeratorRequest(models.Model):
-    """Запрос модератора"""
-    status = models.SmallIntegerField(
-        _("Состояние запроса"), choices=PositionEnum.values.items())
-    text = models.TextField(_("Текс заявки"))
-
-    def display(self):
-        return u"{} {}".format(self.id, PositionEnum.values.get(self.status))
-
-    def __str__(self):
-        return self.display()
-
-
 class House(models.Model):
     """ Дом """
     street = models.CharField(_("Улица"), max_length=40)
@@ -65,7 +52,11 @@ class House(models.Model):
         verbose_name=_(u'ТСЖ'), db_index=True, null=True, blank=True)
 
     def __str__(self):
-        return "__".join((self.street, self.house_num))
+        return "__".join((self.street, self.number))
+
+    @cached_property
+    def address(self):
+        return 'ул. {}, дом {}'.format(self.street, self.number)
 
 
 class Chat(models.Model):
@@ -73,10 +64,13 @@ class Chat(models.Model):
     name = models.CharField(_("Имя чата"), max_length=55)
     link = models.CharField(_("ссылка"), max_length=400)
     house = models.OneToOneField(
-        House, on_delete=models.CASCADE, primary_key=True)
-    request = models.ForeignKey(
-        ModeratorRequest, related_name='get_moderators',
-        verbose_name=_(u'Заявка'), db_index=True, null=True, blank=True)
+        House, on_delete=models.CASCADE, null=True, blank=True)
+    telegram_chat_id = models.CharField('ID телеграм чата',
+                                        max_length=100,
+                                        null=True, blank=True)
+    telegram_chat_title = models.CharField('название чатика в Telegram',
+                                           max_length=100,
+                                           null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -84,12 +78,22 @@ class Chat(models.Model):
     @cached_property
     def house_address(self):
         if self.house:
-            return self.house.address()
+            return self.house.address
 
 
 class Order(models.Model):
     chat = models.ForeignKey(Chat, verbose_name=u'Из какого чата')
+    status = models.SmallIntegerField(
+        _("Состояние запроса"), choices=OrderStatusEnum.values.items(),
+        default=OrderStatusEnum.OPEN)
     text = models.TextField('Текст заявки')
     executor = models.CharField('Исполнитель', max_length=200)
     created = models.DateTimeField('Время создания', auto_now_add=True)
     finished = models.DateTimeField('Время исполнения', null=True, blank=True)
+
+    def display(self):
+        return u"{} {}".format(
+            self.id, OrderStatusEnum.values.get(self.status))
+
+    def __str__(self):
+        return self.display()
