@@ -18,10 +18,15 @@ from django.contrib import admin
 
 from apps.domochat import views
 
+
 urlpatterns = [
-    url(r'^$', views.main_page, name='index'),
+    url(r'^$', views.index_view, name='index'),
     url(r'^admin/', admin.site.urls),
-    url(r'company/(?P<name>.+(\s+?.+?)?)/', views.main_page, name='index'),
+    url(r'company/(?P<name>.+(\s+?.+?)?)/', views.index_view, name='index'),
+
+    url(r'company/orders/$', views.order_list_view, name='orders'),
+    url(r'company/orders/(?P<order_id>\d)/$', views.order_item_view, name='show_order'),
+
 
 
 ]
