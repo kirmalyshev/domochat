@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', views.main_page, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'company/(?P<name>.+(\s+?.+?)?)/', views.main_page, name='index'),
-
+    url(r'profile/(?P<name>.+(\s+?.+?)?)/', views.profile_page,
+        name='profile'),
 
 ]
